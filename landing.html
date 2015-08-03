@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
+<title>Wildr</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<link href="landing.css" rel="stylesheet" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript" src="js/background.cycle.js"></script>
+<script src="js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $(".hero").backgroundCycle({
+                    imageUrls: [
+                        'images/pangong.jpg',
+                        'images/Rajmachi_0.jpg'
+                    ],
+                    fadeSpeed: 4000,
+                    duration: 5000,
+                    backgroundSize: SCALING_MODE_COVER
+                });
+            });
+        </script>
+</head>
+
+<body>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Come Join Us <span class="hideThisMobile">And Reach A Wider Audience</span></h4>
+      </div>
+      <div class="modal-body">
+        <form action="MAILTO:at@aakasht.com">
+        	<div class="formLeft">
+                <label for="name">Organization Name:</label>
+                <span class="hideThisMobile">
+                <label for="phNo"> Phone Number:</label>
+                <label for="emailId">Email Id:</label>
+                </span>
+            </div>
+            <div class="formRight">
+                <input class="textBox" id="name" type="text" name="name" placeholder="Organization Name"><br>
+                <label style="display: none;" class="showThisMobile" for="phNo"> Phone Number:</label>
+                <input class="textBox" id="phNo" type="text" name="phNo" placeholder="Your Phone Number"><br>
+                <label style="display: none;" class="showThisMobile" for="emailId"> Email Id:</label>
+                <input class="textBox" id="emailId" type="text" name="emailId" placeholder="Your Email Id"><br>
+            </div>
+            <div style="clear:both;"></div>
+            <div class="formButtons">
+                <input class="submitButton" type="submit" value="Submit" />
+                <input class="cancelButton" data-dismiss="modal" type="submit" value="Cancel" />
+            </div>
+            <div style="clear:both;"></div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- END OF MODAL -->
+
+<div class="header">
+<a href="#" id="logo">#wildr</a>
+<a href="#" id="listWithUs" data-toggle="modal" data-target="#myModal">List With Us</a>
+<a href="#" id="blogUs">Blog</a>
+</div>
+<div class="hero">
+    <h1>Reboot Yourself</h1>
+    <h3>Join <span style="text-decoration:underline; cursor: pointer;">#rewilding</span></h3>
+    <div class="searchbar">
+        <select class="selectActivity">
+       	<option>All Adventure Activities <span class="caret"></span></option>
+       	<option>The second option</option>
+    	</select>
+        <select class="selectSort">
+       	<option>By Distance <span class="caret"></span></option>
+       	<option>The second option</option>
+    	</select>
+        <input style="float: right; width: 100%; height: 40px; background-color:#3F0; border-radius: 8px; border: 0px; margin-top:4px;" type="submit" value="Search" />
+    </div>
+</div>
+<div class="footerContent">
+	<ul>
+        <li id="facebookLogo"></li>
+        <li id="twitterLogo"></li>
+        <li id="instagramLogo"></li>
+    	<div style="clear:both;"></div>
+    </ul>
+    <p style="text-align: center; color: #FFF;">Copyright: 2015</p>
+</div>
+<div class="footer">
+</div>
+</body>
+</html>

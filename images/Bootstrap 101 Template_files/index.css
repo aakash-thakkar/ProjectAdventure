@@ -1,0 +1,412 @@
+@charset "UTF-8";
+/* CSS Document */
+.rating
+{
+	width: 100%;
+	text-align: center;
+}
+.rating > input {
+    position:absolute;
+    top:-9999px;
+    clip:rect(0,0,0,0);
+}
+
+.rating label
+{
+	cursor: pointer;
+}
+
+.ratingText
+{
+	text-align: center;
+	color:#CCC;
+}
+
+#star1:checked ~ #label1
+{
+	background-position: 0px -40px !important; 
+}
+#star2:checked ~ #label2
+{
+	background-position: -40px -40px !important; 
+}
+#star3:checked ~ #label3
+{
+	background-position: -80px -40px !important; 
+}
+#star4:checked ~ #label4
+{
+	background-position: -120px -40px !important; 
+}
+#star5:checked ~ #label5
+{
+	background-position: -160px -40px !important; 
+}
+
+#label1:hover { background-position: 0px -40px !important; }
+#label2:hover { background-position: -40px -40px !important; }
+#label3:hover { background-position: -80px -40px !important; }
+#label4:hover { background-position: -120px -40px !important; }
+#label5:hover { background-position: -160px -40px !important; }
+
+.one-edge-shadow {
+    -webkit-box-shadow: 0 8px 6px -6px #CCC;
+       -moz-box-shadow: 0 8px 6px -6px #CCC;
+            box-shadow: 0 8px 6px -6px #CCC;
+}
+@font-face {
+    font-family: myFirstFont;
+    src: url(../../../../Users/aakashthakkar/Downloads/01182_AgencyFB.ttf);
+}
+
+.reviewUl 
+{
+	list-style: none;
+	text-align: center;
+	margin: 0px;
+	padding: 0px;
+	margin-top: -10px;
+	margin-bottom: 10px;
+}
+.reviewUl li
+{
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	margin: 0px 5px 0px 0px;
+}
+.reviewUl li img
+{
+	border-radius: 8px;
+}
+.searchBar
+{
+	width: 300px;
+	height: 33px;
+	margin-top: 6px;
+	margin-left: 30px;
+	border-radius: 3px;
+	background-color:#FFF;
+	float: left;
+	overflow: hidden;
+}
+.locationIcon
+{
+	background-image:url(location.png);
+	background-size: contain;
+	background-repeat:no-repeat;
+	float: left;
+	margin-top: 3px;
+	margin-left:3px;
+	height:40px;
+	width: 25px;
+	cursor: pointer;
+}
+.searchBar input
+{
+	border-color: transparent;
+	box-shadow: none;
+	background-attachment: scroll;
+	background-clip: border-box;
+	background-image: none;
+	background-origin: padding-box;
+	background-position: 0% 0%;
+	background-repeat: repeat;
+	background-size: auto auto;
+	
+	float: left;
+	margin-top: -2px;
+	margin-left:4px;
+	width: 235px;
+	height: 100%;
+	font-size:18px;
+}
+.resetIcon
+{
+	background-image: url(clear.png);
+	background-size: cover;
+	background-repeat:no-repeat;
+	float: right;
+	height:30px;
+	width: 30px;
+	cursor: pointer;
+}
+.rightBar
+{
+	float: right;
+	color: #FFF;
+	margin-top:10px;
+}
+.rightBar a
+{
+	color: #FFF;
+	font-size:16px;
+	margin-right: 10px;
+}
+.rightBar a:hover
+{
+	text-decoration: none;
+}
+
+.badgeCounter2
+{
+	float: right;
+	padding: 5px 12px;
+	line-height: 18px;
+	background: green;
+	border-radius: 9px;
+	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3) inset, 0px 1px rgba(255, 255, 255, 0.2);
+	font-size: 14px;
+	color: white;
+	margin-top: -8px;
+}
+#sectionContactUS .left
+{
+	float: left;
+	width: 48%;
+	padding: 10px;
+	text-align: center;
+}
+#sectionContactUS .right
+{
+	float: left;
+	width: 48%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	text-align: center;
+	border-left-style: solid;
+	border-left-width: 1px;
+	border-left-color: #CCC;
+}
+
+.modal-buy > ul
+{
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+.modal-buy > ul li
+{
+	display: inline-block;
+	float: left;
+}
+.leftBuy
+{
+	width: 200px;
+	height:500px;
+}
+.rightBuy
+{
+	width: 670px;
+	height:500px;
+	margin-left:10px;
+}
+.navBuyContainer
+{
+	padding: 20px 0px 0px 0px;
+}
+.navBuy
+{
+	border-bottom-style: solid;
+	border-bottom-width:1px;
+	border-bottom-color: #CCC;
+	height:70px;
+	width:100%;
+	background-color: #F0F0F0;
+	color: #666;
+	cursor: pointer;
+}
+.navBuy:hover
+{
+	background-color: #E6E6E6;
+}
+.navDigit
+{
+	float: left;
+	width: 28px;
+	height: 28px;
+	background-color:#F00;
+	border-radius: 20px;
+	margin-left: 10px;
+	margin-top: 14px;
+	line-height: 28px;
+	color: #FFF;
+	font-family: robotoRegular;
+	text-align: center;
+	font-size:18px;
+	font-weight: normal;
+}
+.navData
+{
+	float: left;
+	padding: 16px 0px 0px 8px;
+	font-family: robotoRegular;
+	font-size: 16px;
+}
+.selectedBuy
+{
+	font-weight: bold;
+	color: #000;
+	background-color:#FFF;
+}
+.selectedBuy:hover
+{
+	background-color: #FFF;
+}
+/*
+#bookLabel::after
+{
+	content: "11th June";
+	background: #F90 radial-gradient(circle at 1px -11px , #FFF 8%, #F90 26px) repeat scroll 0% 0%;
+	border: 2px solid #FFF;
+	border-radius: 12px;
+	box-shadow: 1px 1px 1px #000;
+	color: #000;
+	font: bold 12px/9px Helvetica,Verdana,Tahoma;
+	height: 12px;
+	padding: 5px 5px 0px;
+	text-align: center;
+	min-width: 8px;
+	position: absolute;
+	top: 3px;
+	left: 24px;
+}*/
+.rightBuyBlock
+{
+	width: 100%;
+	height: 100%;
+	overflow: none;
+}
+.btn-bottom-left
+{
+	bottom: 70px;
+	right: 50px;
+	position: absolute;
+	width: 150px;
+	height: 40px;
+}
+.optionBoxDate
+{
+	width: 500px;
+	margin: 0px auto;
+	background-color: #FFF;
+	border-bottom-color: #CCC;
+	border-bottom-style: solid;
+	text-align: center;
+	cursor: pointer;
+}
+.optionBoxDate p
+{
+	margin: 0px;
+	font-size: 18px;
+	line-height: 20px;
+	padding: 0px 0px 10px;
+}
+.optionBoxDate:hover .optionDateDropDown
+{
+	display: block;
+}
+.optionDateDropDown
+{
+    position: absolute;
+    width: 600px;
+    background-color: #FF8080;
+    display: none;
+	text-align:center;
+    left: 260px;
+    top: 67px;
+}
+.optionDateDropDown ul
+{
+	text-align:center;
+	margin: 0px 0px 0px 100px;
+	padding:0px;
+}
+.optionDateDropDown li
+{
+	padding: 10px;
+	color:#03F;
+}
+
+.optionBoxDay
+{
+	height: 56px;
+	width: 554px;
+	margin: 0px auto;
+	border: 3px solid green;
+	margin-top: 5px;
+}
+.leftOptionIndicator
+{
+	height: 100%;
+	width: 24px;
+	float: left;
+	background-image:url(left.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: 0px 5px;
+}
+.optionBoxDay ul
+{
+	float: left;
+	list-style: none;
+	margin:0px;
+	padding:0px;
+	width: 500px;
+	height: 100%;
+}
+.optionBoxDay li
+{
+	display: inline-block;
+	font-weight: bold;
+	padding: 5px 10px;
+	border-left: 1px solid #CCC;
+	text-align: center;
+	font-size: 14px;
+	cursor: pointer;
+}
+.optionBoxDay li:last-child
+{
+	border-right: 1px solid #CCC;
+}
+.optionBoxDay li:hover
+{
+	background-color: #5CD65C;
+}
+.rightOptionIndicator
+{
+	height: 100%;
+	width: 24px;
+	float: right;
+	background-image: url("left2.png");
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: 0px 5px;
+}
+.selectedOption
+{
+	background-color: #5CD65C;
+}
+.optionBoxTime
+{
+	width: 500px;
+	border: 1px solid #CCC;
+	text-align: center;
+	list-style: outside none none;
+	padding: 0px;
+	margin: 10px auto;
+}
+.optionBoxTime li:first-child
+{
+	font-weight: bold;
+	cursor: auto;
+	color: black;
+}
+.optionBoxTime li
+{
+	display: inline-block;
+	padding: 10px;
+	cursor: pointer;
+	color: blue;
+}
+

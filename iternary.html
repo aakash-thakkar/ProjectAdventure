@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Untitled Document</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="itenary.css" rel="stylesheet" />
+    <script src="http://maps.googleapis.com/maps/api/js"></script>
+    <script>
+        /*function initialize() {
+            var mapProp = {
+                center: new google.maps.LatLng(51.508742, -0.120850),
+                zoom: 5
+            };
+            var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);*/
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header"> <a class="navbar-brand" href="#">TripIT</a> </div>
+            <div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">Page 1</a></li>
+                    <li><a href="#">Page 2</a></li>
+                    <li><a href="#">Page 3</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="mainContainer">
+
+        <div class="parameterBar" id="bar">
+            
+        </div>
+
+        <!-- End of Satej's Bar -->
+        <div class="itenSide">
+
+            <div class="list-group-container" id="list-container">
+                <div class="panel">
+                    <a data-toggle="collapse" name="0" data-parent="#list-container" href="#pune" class="list-group-item" onClick="selectTrip(this)">
+                        <img src="http://c2.hiqcdn.com/blog/sites/default/files/Rajmachi_0.jpg" class="image">
+                        <div class="list-item-content">
+                            <h4 class="list-group-item-heading">Pune</h4>
+                            <p class="list-group-item-text">Maharashtra<span class="badgeCounter">7 Activities</span></p>
+                            <div class="list-item-division">
+                                <ul>
+                                    <li>122 km</li>
+                                    <li><img src="sunny.png" width="30" height="30">18-25degree</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div style="clear:both;"></div>
+                    </a>
+                    <ul id="pune" class="collapse subResults">
+                        <div class="panel">
+                            <a data-toggle="collapse" href="#puneTreks" data-parent="#pune">
+                                <li>
+                                    <img src="http://offbeatadventures.in/images/activities/trekking.png" width="50" height="40" style="margin-right: 10px;">Trekking
+                                    <span class="badgeCounterActivity">2 Activities</span>
+                                    <span class="activityIndex">7.5</span>
+                                </li>
+                            </a>
+                            <ul id="puneTreks" class="collapse subResults">
+                                <li value="0" onClick="selectActivity(this)">Hampta Pass Trek<span class="activityIndex">7.5</span></li>
+                                <li value="1" onClick="selectActivity(this)">Valley Of Flower Trek<span class="activityIndex">4.5</span></li>
+                                <li>Roopkund Trek<span class="activityIndex">6</span></li>
+                                <li>Stok Kangri Expedition<span class="activityIndex">2.5</span></li>
+                                <li>Goechala Trek<span class="activityIndex">9.5</span></li>
+                            </ul>
+                        </div>
+                        <div class="panel">
+                            <a data-toggle="collapse" href="#puneRafting" data-parent="#pune">
+                                <li>
+                                    <img src="https://d30y9cdsu7xlg0.cloudfront.net/png/22422-200.png" width="50" height="40" style="margin-right: 10px;">White Water Rafting
+                                </li>
+                            </a>
+                            <ul id="puneRafting" class="collapse subResults">
+                                <li>7.5km Raft<span class="activityIndex">7.5</span></li>
+                                <li>18km Raft<span class="activityIndex">4.5</span></li>
+                            </ul>
+                        </div>
+                        <li value="2" onClick="selectActivity(this)">
+                            <img src="http://icons.iconarchive.com/icons/icons8/windows-8/512/Travel-Camping-Tent-icon.png" width="50" height="40" style="margin-right: 10px;">Camping
+                        </li>
+                        <li value="3" onClick="selectActivity(this)">
+                            <img src="http://www.getoutandtravel.net/wp-content/uploads/2013/03/rock-climbing-icon.png" width="50" height="40" style="margin-right: 10px;">Rock Climbing
+                            <span style="right:20px; top: 5px; position:absolute; line-height: 20px; border-color:#930; border-style:solid; border-width: 2px; padding: 5px 15px;">2.5</span>
+                        </li>
+                        <li value="4" onClick="selectActivity(this)">
+                            <img src="http://4vector.com/i/free-vector-hotel-icon-near-mountain-biking_100594_Hotel_Icon_Near_Mountain_Biking.png" width="50" height="40" style="margin-right: 10px;">Cycling</li>
+                    </ul>
+                </div>
+
+                <div class="panel">
+                    <a data-toggle="collapse" data-parent="#list-container" href="#kolad" class="list-group-item" onClick="selectTrip(this)">
+                        <img src="http://c2.hiqcdn.com/blog/sites/default/files/Rajmachi_0.jpg" class="image">
+                        <div class="list-item-content">
+                            <h4 class="list-group-item-heading">Kolad</h4>
+                            <p class="list-group-item-text">Maharashtra</p>
+                            <div class="list-item-division">
+                                <ul>
+                                    <li>148 km</li>
+                                    <li><img src="sunny.png" width="30" height="30">18-25degree</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div style="clear:both;"></div>
+                    </a>
+                    <ul id="kolad" class="collapse subResults">
+                        <li onClick="">Trekking</li>
+                        <li>White Water Rafting</li>
+                        <li>Camping</li>
+                        <li>Cycling</li>
+                    </ul>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="mapSide">
+            <div id="googleMap" style="height: 100%;"></div>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://code.jquery.com/jquery.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files 
+            as needed -->
+        <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>

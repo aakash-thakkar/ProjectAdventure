@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Wildr.in</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://maps.googleapis.com/maps/api/js"></script>
+  	<script src="js/map.js"></script>
+    <script>
+        var infoOpen;
+        var info2Open = false;
+
+        function openInfo() {
+            document.getElementById("infoLevel1").setAttribute("style", "transform: translate(400px);");
+            document.getElementById("info2").setAttribute("style", styleOrg + " transform: translate(400px);");
+			infoOpen = true;
+        }
+
+        function closeInfo() {
+            if (infoOpen == true) {
+                document.getElementById("infoLevel1").setAttribute("style", "transform: translate(0px);");
+                document.getElementById("info2").setAttribute("style", styleOrg + " transform: translate(0px);");
+            }
+            infoOpen = false;
+        }
+        function selectTrip(element) {
+			updateInfo1WithLocation(element);
+			clearSelectedActivities();
+			calcRoute(element.getElementsByClassName("list-group-item-heading").item(0).innerHTML + " " + element.getElementsByClassName("list-group-item-text").item(0).innerHTML);
+            var parentPanel = element.parentNode;
+            var openElement = document.getElementsByClassName("in");
+            if (openElement.item(0) != null) {
+                var openActivities = openElement.item(0).getElementsByClassName("in");
+                if (openActivities.item(0) != null) {
+                    openActivities.item(0).setAttribute("class", "collapse subResults");
+                }
+            }
+            if (element.getAttribute("class").search("active") > 0) {
+                element.setAttribute("class", "list-group-item");
+                closeInfo();
+            } else {
+                closeInfo();
+                var x = document.getElementsByClassName("list-group-item");
+                var i;
+                for (i = 0; i < x.length; i++) {
+                    x[i].setAttribute("class", element.getAttribute("class"));
+                }
+                element.setAttribute("class", element.getAttribute("class") + " active");
+                openInfo();
+            }
+        }
+
+        function selectActivity(element) {
+            //alert(element.getAttribute("value"));
+        }
+
+        function changeIndicator(element) {
+            var x = element.parentNode.getElementsByTagName("li");
+            var i;
+            for (i = 0; i < x.length; i++) {
+                x[i].setAttribute("class", "");
+            }
+            element.setAttribute("class", "active");
+        }
+		var width;
+        var w;
+        var styleOrg;
+
+        function alertWidth() {
+            width = $(window).width() - 760;
+            w = width + "px";
+            var l = width - 360;
+            styleOrg = "width: " + w + "; " + " left: -" + l.toString() + "px;";
+            document.getElementById("info2").style = styleOrg;
+        }
+		function closeInfo2()
+		{
+			if(info2Open == true)
+			{
+				document.getElementById("info2").setAttribute("style", styleOrg + " transform: translate(400px);");
+				info2Open = false;
+			}
+		}
+        function selectTripProvider(element) {
+			prov = element;
+			subl=prov.childNodes[3].childNodes[3].innerHTML;
+			organizer=prov.childNodes[3].childNodes[2].innerHTML;
+			updateTripProvider(subl,organizer);
+            if (info2Open == true && element.getAttribute("class").search("selectOrganizer") > 0) {
+                document.getElementById("info2").setAttribute("style", styleOrg + " transform: translate(400px);");
+                element.setAttribute("class", "list-group-item");
+                info2Open = false;
+            } else {
+				var a = width+400;
+				a = a + "px";
+                document.getElementById("info2").setAttribute("style", styleOrg + " transform: translate(" + a +");");
+                var x = document.getElementsByClassName("list-group-container2").item(0).getElementsByClassName("list-group-item");
+                var i;
+                for (i = 0; i < x.length; i++) {
+                    x.item(i).setAttribute("class", "list-group-item");
+                }
+                element.setAttribute("class", element.getAttribute("class") + " selectOrganizer");
+                info2Open = true;
+            }
+        }
+
+        
+			
+        </script>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="index.css" rel="stylesheet">
+</head>
+
+<body onLoad="alertWidth()">
+<div class="hideForMobile">
+    <!-- Modal -->
+    <div id="reviewModal" class="modal fade" role="dialog">
+        <div class="modal-dialog" style="margin-top: 10%;">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <!--<div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>-->
+                <div class="modal-body">
+                    <div class="rating">
+                        <legend>Please rate:</legend>
+                        <input type="radio" id="star1" name="rating" value="1" /><label onClick="setRating(this)" onMouseOver="changeRatingText(this)" onMouseOut="revertRatingText()" id="label1" style="background:url(ratingSprite.png) 0px 0px; width:40px; height: 40px;" for="star1" title="Angry"></label>
+                        <input type="radio" id="star2" name="rating" value="2" /><label onClick="setRating(this)" onMouseOver="changeRatingText(this)" onMouseOut="revertRatingText()" id="label2" for="star2" style="background:url(ratingSprite.png) -40px 0;  width:40px; height: 40px;" title="Waste Of Money"></label>
+                        <input type="radio" id="star3" name="rating" value="3" /><label onClick="setRating(this)" onMouseOver="changeRatingText(this)" onMouseOut="revertRatingText()" id="label3" for="star3" style="background:url(ratingSprite.png) -80px 0; width:40px; height: 40px;" title="Could Have Been Better"></label>
+                        <input type="radio" id="star4" name="rating" value="4" /><label onClick="setRating(this)" onMouseOver="changeRatingText(this)" onMouseOut="revertRatingText()" id="label4" for="star4" style="background:url(ratingSprite.png) -120px 0; width:40px; height: 40px;" title="Happy"></label>
+                        <input type="radio" id="star5" name="rating" value="5" /><label onClick="setRating(this)" onMouseOver="changeRatingText(this)" onMouseOut="revertRatingText()" id="label5" for="star5" style="background:url(ratingSprite.png) -160px 0; width:40px; height: 40px;" title="Awesome"></label>
+                    </div>
+                    <p class="ratingText">Please Select A Rating Emoticon</p>
+                    <div class="form-group" style="text-align: center;">
+                        <label for="comment">Comment:</label>
+                        <textarea onKeyUp="changeCharCount(this)" class="form-control" rows="5" id="comment"></textarea>
+                        <p>Maximum of 250 Chars - <span id="reviewCharCount">250</span> Remaining</p>
+                    </div>
+                    <!--<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                    </fb:login-button>-->
+                    <div style="float:right;" class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="false"></div>
+                    <button onClick="checkLoginState();">Submit Review</button>
+
+                    <div id="status" style="height:100px;">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for Buy -->
+    <div id="bookModal" class="modal fade" role="dialog">
+      <div class="modal-dialog" style="width: 920px;">
+    	<div class="modal-content">
+            <div class="modal-body">
+            	<div class="modal-buy">
+                    <h1 id="modalHeader">Hampta Pass Trek</h1>
+                    <h3 id="modadSubHeader">Explorers India</h3>
+               
+                <div class="buyList" id="buy-List">
+                    <div class="panel">
+                        <a id="buySelectA" data-toggle="collapse" data-parent="#buy-List" href="#buySelect" class="buyListItem" ><span class="buyIndicator"> - </span>Step 1: Select Date & Time</a>
+                        <div id="buySelect" class="collapse in">
+                            <div class="selectDateTime">
+                            	<ul>
+                                	<li><p class="selectedMonth" onClick="selectMonth(this)">June</p></li>
+                                    <li><p onClick="selectMonth(this)">July</p></li>
+                                    <li><p onClick="selectMonth(this)">August</p></li>
+                                    <li><p onClick="selectMonth(this)">September</p></li>
+                                </ul>
+                            	<div class="dateTimeOption" style="border-top: 1px solid #CCC;">
+                                	<p class="dateOption">Today | 5th June</p> 
+                                    <div class="timeOptionContainer">
+                                    	<div class="timeOptions selectedTime" onClick="selectTime(this)">10:00 AM</div>
+                                        <div class="timeOptions" onClick="selectTime(this)">2:00 PM</div>
+                                        <div class="timeOptions" onClick="selectTime(this)">4:00 PM</div>
+                                    </div>
+                                    <p class="costDisplay">Rs 800/Per Person</p>
+                                    <button class="dateTimeButton" onClick="goToDetails(this)">Select</button>
+                                </div>
+                                <div class="dateTimeOption">
+                                	<p class="dateOption">Tuesday | 14th June</p> 
+                                    <div class="timeOptionContainer">
+                                    	<div class="timeOptions" onClick="selectTime(this)">10:00 AM</div>
+                                    </div>
+                                    <p class="costDisplay">Rs 800/Per Person</p>
+                                    <button class="grayButton dateTimeButton " onClick="goToDetails(this)">Select</button>
+                                </div>
+                                <div class="dateTimeOption">
+                                	<p class="dateOption">Friday | 27th June</p> 
+                                    <div class="timeOptionContainer">
+                                    	<div class="timeOptions" onClick="selectTime(this)">10:00 AM</div>
+                                        <div class="timeOptions" onClick="selectTime(this)">11:00 AM</div>
+                                        <div class="timeOptions" onClick="selectTime(this)">2:00 PM</div>
+                                        <div class="timeOptions" onClick="selectTime(this)">3:00 PM</div>
+                                        <div class="timeOptions" onClick="selectTime(this)">4:00 PM</div>
+                                    </div>
+                                    <p class="costDisplay">Rs 800/Per Person</p>
+                                    <button class="grayButton dateTimeButton" onClick="goToDetails(this)">Select</button>
+                                </div>
+                                
+                            </div>
+                        </div>
+                     </div>
+                     <div class="panel" style="text-align: center;">
+                        <a id="buyDetailA"  data-toggle="collapse" data-parent="#buy-List" href="#buyDetails" class="buyListItem grayThis" ><span class="buyIndicator">+</span>Step 2: Your Details</a>
+                        <div id="buyDetails" class="collapse">
+                        	<div class="formElements">
+                                <input id="name" type="text" placeholder="Wildr India">
+                                <label for="name">Your Name:</label>
+                            </div>
+                            <div class="formElements">
+                                <input id="phNo" type="text" placeholder="9811**4212">
+                                <label for="name">Your Phone Number:</label>
+                            </div>
+                            <div class="formElements">
+                                <input id="eId" type="text" placeholder="me@wildr.in">
+                                <label for="name">Your Email id:</label>
+                            </div>
+                            <div class="formElements">
+                                 <select>
+                                  <option value="1">1</option>
+                                  <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                  <option value="5">5</option>
+                                  <option value="6">6</option>
+                                  <option value="7">7</option>
+                                  <option value="8">8</option>
+                                  <option value="9">9</option>
+                                  <option value="10">10</option>
+                                </select> 
+                                <label for="name">Number of People:</label>
+                            </div>
+                            <hr>
+                            <button class="detailButton" onClick="goToSummary()">Next</button>
+                        </div>
+                     </div>
+                     <div class="panel">
+                        <a id="buySummaryA" data-toggle="collapse" data-parent="#buy-List" href="#buySummary" class="buyListItem grayThis"><span class="buyIndicator">+</span>Step 3: Order Summary</a>
+                        <div id="buySummary" class="collapse">
+                            <div class="cartHeader">
+                            	<p>ITEM</p>
+                                <p>QTY</p>
+                                <p>SUBTOTAL</p>
+                            </div>
+                            <div class="cartItem">
+                            	<div class="cartName">
+                                	<h2>Hampa Pass Trek</h2>
+                                    <h3>Explorers India | July 22 | 5PM</h3>
+                                </div>
+                                <div class="cartQty">
+                                	<p>2</p>
+                                </div>
+                                <div class="cartSubTotal">
+                                	<p>Rs. 2000</p>
+                                </div>
+                                <div style="clear: both;"></div>
+                            </div>
+                            <div class="cartTotal">
+                            	<p>Rs 2000</p>
+                            	<p style="width:0%;">Total</p>
+                                <div style="clear: both;"></div>
+                            </div>
+                            <div class="cartDiscount">
+                            	<button>APPLY</button>
+                                <input type="text">
+                            	<p>Have a discount code?</p>
+                                <div style="clear:both;"></div>
+                            </div>
+                        <hr>
+                        <button class="detailButton">Confirm Order</button>
+                        <p>Payment Details Will Be Emailed to You.</p>
+                        </div>
+                     </div>
+                     <!--<div class="panel">
+                        <a id="buyPaymentA" data-toggle="collapse" name="0" data-parent="#buy-List" href="#buyPayment" class="buyListItem" ><span class="buyIndicator">+</span>Step 4: Confirmation</a>
+                        <div id="buyPayment" class="collapse ">
+                            asdamsdasdoiasds
+                            dasd<br>
+                            <br>
+                            sada<br>
+                            sda<br>
+                            sd<br>
+                            asd<br>
+                            sad<br>
+                            ad
+                        </div>
+                     </div>-->
+                     
+                     </div>
+               </div>
+            </div>
+            <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                  </div>
+        </div>
+      </div>
+    </div>
+    	
+    <nav class="navbar navbar-inverse" style="background-color: #5CD65C; border-color: #5CD65C; border-radius: 0px;">
+        <div class="container-fluid">
+            <div class="navbar-header"> <a class="navbar-brand" style="color: white; margin-top: -3px; font-size: 34px; font-family: Agency FB; float:left;" href="#">#wildr</a> </div>
+            <div class="searchBar">
+                <div class="locationIcon"></div>
+                <input type="text" oninput="locationFilter(this)" placeholder="Search by City">
+            	<div class="resetIcon"></div>
+            </div>
+            <div class="rightBar">
+                <a href="#" id="blogUs">Blog</a>
+                <a href="#" id="contactUs">Contact us</a>
+                <a href="#" id="listWithUs">List With Us</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="mainContainer">
+
+        <div class="parameterBar" id="bar">
+            <ul>
+                <li style="width: 120px;">
+                    <p style=" margin-left: 20px; border-right: 1px; border-right-style: solid; border-right-color:#e6e6e6; "><span id="resultsct">0</span> Results</p>
+                </li>
+
+                <li style="width: 240px;">
+                    <div class="dropdown">
+                        <div class="dropdown-toggle dropBox" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                            <span id="sortList" style=" margin-left:10px">Relevance</span><span class="caret"></span>
+                        </div>
+                        <ul class="dropdown-menu dropdownChange" role="menu" aria-labelledby="dropdownMenu1">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" onClick="sortLocation(this, 0)">Relevance</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" onClick="sortLocation(this, 1)">Distance - Low to High</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" onClick="sortLocation(this, 2)">Distance - High to Low</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li style="width: 130px;">
+                    <div type="dropdown" class=" dropdown-toggle" data-toggle="dropdown" style="width:100%">Type of Trip<span class="caret"></span></div>
+                    <ul class="dropdown-menu">
+                         <li onclick="checkThis(this,'camping')">
+                            <a href="#" class="small" data-value="camping" tabIndex="-1">
+                                <label>
+                                    <input type="checkbox" class="triptype" value="camping" />&nbsp;Camping</label>
+                            </a>
+                        </li>
+                        <li onclick="checkThis(this,'Trek');">
+                            <a href="#" class="small" data-value="trek" tabIndex="-1">
+                                <label>
+                                    <input class="triptype" type="checkbox" value="trek" />&nbsp;Trek</label>
+                            </a>
+                        </li>
+						<li onclick="checkThis(this,'rafting');">
+                            <a href="#" class="small" data-value="rafting" tabIndex="-1">
+                                <label>
+                                    <input class="triptype" type="checkbox" value="rafting" />&nbsp;Rafting</label>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <p style="float:left;padding-right:10px;" onclick="resetall()">Reset selections</p>
+                    <span class="glyphicon glyphicon-repeat" onclick="resetall()" aria-hidden="true"></span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- End of Satej's Bar -->
+
+        <div class="slide-info-level2" id="info2">
+
+            <nav class="navbar" style="min-height: 0px; border: none;">
+                <ul class="contentHeaders nav">
+                    <li><a href="#sectionSummary">Summary</a></li>
+                    <li><a href="#sectionDescription">Detail Itinerary</a></li>
+                    <li><a href="#sectionContactUS">Contact Us</a></li>
+                    <li id="bookLabel"><a href="" data-toggle="modal" data-target="#bookModal" onClick="updateBookModalContents()">Book</a></li>
+                </ul>
+            </nav>
+
+            <div class="contentContainer">
+                <div class="contentData" data-spy="scroll" data-target=".navbar" data-offset="12">
+
+                    <div id="myImageCarousel2" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#myImageCarousel2" data-slide-to="0" class="active"></li>
+                            <li data-target="#myImageCarousel2" data-slide-to="1"></li>
+                            <li data-target="#myImageCarousel2" data-slide-to="2"></li>
+                            <li data-target="#myImageCarousel2" data-slide-to="3"></li>
+                        </ol>
+
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" role="listbox">
+                            <div class="item active">
+                                <img src="images/img_chania.jpg" alt="Chania">
+                            </div>
+
+                            <div class="item">
+                                <img src="images/img_chania2.jpg" alt="Chania">
+                            </div>
+
+                            <div class="item">
+                                <img src="images/img_flower.jpg" alt="Flower">
+                            </div>
+
+                            <div class="item">
+                                <img src="images/img_flower2.jpg" alt="Flower">
+                            </div>
+                        </div>
+
+                        <!-- Left and right controls -->
+                        <a class="left carousel-control" href="#myImageCarousel2" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#myImageCarousel2" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                    <div id="myContentCarousel2">
+                        <!-- Location Details -->
+                        <div class="item one-edge-shadow" id="sectionSummary" style="text-align:center">
+                        <img src="http://www.acelloria.com/wp-content/themes/twentytwelve/images/partner/report.png" width="40" height="40">
+                        <p style="font-family: tisa; font-size: 14px; text-align: left;">
+                        <br>
+It is a short trek of just 5 days. The trekking in Himanchal - Hampta Pass starts from beautiful hill station Manali. At an altitude of Manali trekkers cross from Jobra to Chika. Crossing through small pine forest, huge rock and rich vegetations are remarkable. Travelling just for four hours and you reach to the second destination of your trek – Chika. Here you enjoy the refreshing river, waterfalls and grassy land. Here the camps are tented and trekkers hold at night and relax. The second day of the trek is Balu ka Gera. At Balu Ka Gera you meet with huge rocks at Nani Lake, enjoy the icy cold water, mountain and click photographs to make your trip memorable. The next destination is Shea Goru, it is a 8 hrs journey. Colorful river side tiny flowers and patches of snow divert the attention of trekkers. At an altitude before crossing the Hampta Pass Deo Tibba Peak is clearly visible. Hampta Pass has got two ridges. The zic-zag route, U-turn, downhill and snow fall with an uncertain rainfall makes the trekking moment more enjoyable. It is an easy trek with a moderate level of walking area. Then here comes the second last destination from Siagoru to Chatru; it is a downhill trek of 5 hours. Here you get rivers and beautiful valleys in the heart of mountain ranges. The trekking is quite difficult in this area because of slippery soils and rocky edge path. Chandra River and glacier flow near it makes a remarkable statement in trek. The final destination to the trek is Chatru to Chandratal. Chatru is at a distant of 70 Kms far from Chandartal. You can drive to Chandar tal and visit the Moon Lake; it is the main point to visit in Chandartal and step back to Manali after enjoying your time at utmost. You can also enjoy the local sightseeing of Manali.
+
+So, don't be awaited and book now for wonderful mixture of interesting and adventurous activities. Meeting with the peak of Himalaya ranges and exploring it will be a tremendously ever memorable experience.
+</p>
+                        </div>
+                        <div class="item one-edge-shadow" id="sectionDescription" style="text-align:center">
+							<img src="http://simpleicon.com/wp-content/uploads/note-2.png" width="40" height="40">
+                            <p style="font-family: tisa; font-size: 18px;">                            
+                                <p class="dayHeader">Day 01: Manali to Chika Details</p>
+								<p class="dayDetail" style="text-align:left; padding: 0px 5px 0px 5px;">All the tourists will be reaching Manali which is also known as the paradise of India by afternoon. Many types of transportation facilities buses and cars are available for you to reach Manali. In Himachal Pradesh Kullu and Manali are the too small towns which are located very close to each other. Both the places are visited at the same time by all the tourists. As soon as you reach Manali you will take rest in the provided lodge or hotels. This place is famous for good food and weather. The people over here are you helping nature. After having a delicious lunch at any restaurant, you can start your journey for today towards Chika. It is situated 10,250 feet about the sea level. All along the way, you will be able to see a very famous temple which is known as the origin of small hot spring. This temple is called Vashisht temple. According to beliefs the spring is holy water. This place is just 3 kilometres away from Manali. If you are going by a cab, then there is an intermediate destination called Johari. You can also visit many small villages, which is the covered with snow one of these villages name, is Prerni. Trekking along the roads of Himachal Pradesh is a very delightful scene, and you will have your lifetime experience over here. It is known for its hill station and its beauty of it. While you will be travelling to reach Jobri, you can see the roads are dividing, and there is an altitude gain. Jobri is nothing but a place where all the temporary workers have set up their houses. All the workers working a hydro power plant which is located nearby. From this place, your actual trek starts. There is a manmade bridge made up of concrete what is supposed to be crossed by you. After crossing the bridge, keep yourself to the left, and it will take you the forest having coniferous trees. The geography of this place doesn't allow any other kind of trees to grow because of snow. After you have your final crossing Aleonallah, you will reach beautiful meadow, having full of greenery. The grasses on the meadows are evenly spread giving you a nice glimpse of the scenery. You will not have to worry to travel this place as the terrain is flat. After travelling for 2 to 3 hours in the same direction, you'll reach the final destination for the day-Chikka. You will be camping beside the stream of water and you can spot very beautiful site of the waterfall from the camping area.</p>
+                                <ul class="reviewUl">
+                                        	<li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone1.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone2.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone3.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone4.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone5.jpg" width="40" height="40"></li>
+                                        </ul>
+<p class="dayHeader">Day 02: Chika to Baluka Ghera</p>
+<p class="dayDetail" style="text-align:left; padding: 0px 5px 0px 5px;">Trekking to Hampta Pass After having a good tight sleep, have the healthiest breakfast and get ready to continue your trek. For today, your destination will be BhalukaGhera. This place is famous for brown bears and hence the name of this place stands on them. During winters, all the brown bears come over here and hibernate. As you continue to travel in the same direction, you can see a bridge, which is made up of logs. It is necessary to cross the bridge with caution. Just after crossing the bridge you will be able to view a stream in which water is flowing in a very high speed. You should keep yourself left to reach the destination. After a point of time, you will face some attitude to come across. Many different varieties of flowers can be seen all the way. After some time again you will again see a stream of water flowing. It is recommended to cross the stream on the morning itself as that time the water current is slow and steady as compared to the later time of the day. Again you will need to keep yourself left till you do not reach your campsite for the day. Totally you will travel about 8 kilometres, and it will take approximately 4 to 5 hours to cross so much distance. Take some rest in the camp and enjoy the scenic beauty down there.
+<ul class="reviewUl">
+                                        	<li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone1.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone2.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone3.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone4.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone5.jpg" width="40" height="40"></li>
+                                        </ul>
+</p>
+
+<p class="dayHeader">Day 03: Baluka Gera to Siagoru, Cross Hampta Pass</p>
+<p class="dayDetail" style="text-align:left; padding: 0px 5px 0px 5px;">It is very important for you to start little early for the trekking today. Keep yourself left of the valley which you will travel full day. It totally depends on the time of trekking but sometimes if you look back all you can see is some snow bridges. Maintaining left is the ultimate object in this trek, and you will keep it till you reach Hampta pass. Trekking in Hampta pass just drives you crazy as it is one of the most fabulous experiences you can have. It has so much natural beauty that cannot be explained in words. It is a perfect location to click some fabulous pictures. Stalls are provided on the way where you can take some rest. About 14000 feet above the sea level is Lahaul which you will reach after leaving behind Hampta Pass. There will be a surprising element waiting for you. There you can view a field full of snow, and it is covered for almost the entire year. The trekking is not that difficult as the altitude is moderate, but the last bridge to cross will take some of your efforts. The climb is very steep and may be little difficult for your legs. As you complete the climb, it will follow a huge descent. The descent terrain will be vanished with a flat surface and many boulders all over the place very soon. After travelling for about some time in the direction, you can again see some stream, and you will have to keep left. After travelling in the levelled ground for some time, you will be heading closer to your destination Siagoru. It is situated 13000 feet above the sea level and is the best place to set up camp for the day. The beauty has its own level and gives a majestic feeling when you view the mountains and river streams. Today was a bit hectic day for you as you would have traversed 14 kilometres all together making you very tired. So do not waste any more time and get to your bed soon to give your body some rest.</p>
+<ul class="reviewUl">
+                                        	<li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone1.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone2.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone3.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone4.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone5.jpg" width="40" height="40"></li>
+                                        </ul>
+<p class="dayHeader">Day 04: Siagoru to Chatru. Drive to Chandratal.</p>
+<p class="dayDetail" style="text-align:left; padding: 0px 5px 0px 5px;">Get up soon and have your breakfast. Get ready for the trek and cross the river which is seen from the campsite. Half of your trek is very easy as it will be full descend and the rest of the trek will be very tiring for you to traverse very steep altitude. It will make your path difficult when you will face the rock zone. After descending you will see the large valley of river Chandra. Chandra River is at 11000 feet above the sea level and is located on the highway of Manali and Kaza. It is an exhibition place as one side you can view the mountains full of snow and the other side you will view barren mountains. On the way, you can satisfy your hunger on the dhabas located on the way of your trek. The food quality is ultimate and delicious, and you will find to have some more of them as you are doing some of the real physical work. By the end of the day, you will cover 8 kilometres approximately, and it should not take more than 5 hours to complete it.</p>
+<ul class="reviewUl">
+                                        	<li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone1.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone2.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone3.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone4.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone5.jpg" width="40" height="40"></li>
+                                        </ul>
+<p class="dayHeader">Day 05: Chandratal to Manali Hampta Pass</p>
+<p class="dayDetail" style="text-align:left; padding: 0px 5px 0px 5px;">you are at the end of your trek. You will be reaching back to Manali and end the journey. You will be starting your journey by car. The roads will lead you to Chandra Tal. It opens at the mid of July, and it ends by the last week of October. Rest days of the year this road cannot be traversed as it will be covered with snow. If you have come to trek in some other days, then you will have to choose an alternate path, which is via Kunzum la. It makes a border between Spiti and Lahaul. You will cross Chotadhara on the way from Kaza to Batal. From Batal, you will have two options. Either you can move towards Chandra Tal, which is about 14000 feet from the sea level, or you can choose to go towards Kunzum la. The name Chandra Tal is because of the moon shaped lake which has crystal clear water. The sight from the mountains of Chandra Tal is an awesome experience, and you can spend some memorable time over there. Kunzum la also gives a night sight of the Chandra Bhaga range. On the way, you can see that there are many prayer flags. These prayer flags are usually put up by the people over here in various occasions. If the colour of the flag is white in colour that means death and if it is some coloured flag that means it is an indication of prayer fulfilled. There is also a good luck wheel which has a major significance in the daily life of people. It is assumed that one who rotates the wheel; it will bring good luck in their lives. After viewing all such places, you will return to Manali via Chhatru and Rohtang pass by the end of the evening. Total distance is covered is 200 kilometre by today itself and you will reach by evening. You can leave for your city by that day itself of you can wait for the day over the hotel and leave for your home next day morning.</p>
+<ul class="reviewUl">
+                                        	<li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone1.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone2.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone3.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone4.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone5.jpg" width="40" height="40"></li>
+                                        </ul>
+                            </p>
+                            <br>
+                        </div>
+
+                        <!-- Location Reviews -->
+                        <div class="item one-edge-shadow" id="sectionContactUS">
+                        	<div class="left">
+                                <img src="images/call.png" width="40" height="40">
+                                <p>
+                                Phone No:-<br>
+                                00-91-9917724737<br>
+                                00-91-7351523841<br>
+                            	</p>
+                            </div>
+                            <div class="right">
+                            	<img src="images/email.png" width="40" height="40">
+                                <p>
+                                For Agents B to B :- sales@trekthehimalayas.com<br>
+                                E-mail:- info@trekthehimalayas.com<br>
+                                E-mail:- rakesh@trekthehimalayas.com<br>
+                                Skype Name :- trekthehimalayas 
+                                </p>
+                            </div>
+                            <div style="clear: both;"></div>
+                        </div>
+
+                        <!-- Trip Providers -->
+                        <div class="item one-edge-shadow" id="sectionBooking" style="background-color:#0F0;">
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-info-level1" id="infoLevel1">
+            <div id="myImageCarousel" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#myImageCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myImageCarousel" data-slide-to="1"></li>
+                    <li data-target="#myImageCarousel" data-slide-to="2"></li>
+                    <li data-target="#myImageCarousel" data-slide-to="3"></li>
+                </ol>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <img src="images/img_chania.jpg" alt="Chania" width="460" height="220">
+                    </div>
+
+                    <div class="item">
+                        <img src="images/img_chania2.jpg" alt="Chania" width="460" height="220">
+                    </div>
+
+                    <div class="item">
+                        <img src="images/img_flower.jpg" alt="Flower" width="460" height="220">
+                    </div>
+
+                    <div class="item">
+                        <img src="images/img_flower2.jpg" alt="Flower" width="460" height="220">
+                    </div>
+                </div>
+
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#myImageCarousel" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myImageCarousel" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+
+            <div id="myContentCarousel" class="carousel slide">
+                <ul class="indicators">
+                    <li data-target="#myContentCarousel" onClick="changeIndicator(this)" data-slide-to="0" class="active">Details</li>
+                    <li data-target="#myContentCarousel" onClick="changeIndicator(this)" data-slide-to="1">Location Reviews</li>
+                    <li data-target="#myContentCarousel" onClick="changeIndicator(this)" data-slide-to="2">Trip Providers</li>
+                </ul>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner carousel-absolute" role="listbox">
+
+                    <!-- Location Details -->
+                    <div class="item itemHeight active">
+                        <div class="detailDiv">
+                            <h4>Why Visit?</h4>
+                            <p>
+                                The world's tallest building, the world's largest mall, Bedouin roots and old souks contrasting high-end attitudes, sparkling nightlife, modern spectacles, The Palm Jumeirah, posh cars, horse races, camel races, 24-hour energy, Middle Eastern escapes.
+                            </p>
+                            <a href="#">Read More -></a>
+                            <div style="clear: both"></div>
+                            <h4>Quick Facts: </h4>
+                            <div class="detailTabs">
+                                <div class="detailTab">
+                                    <div class="heading">
+                                        Elevation:
+                                    </div>
+                                    <div class="value">
+                                        13,100ft
+                                    </div>
+                                </div>
+                                <div class="detailTab">
+                                    <div class="heading">
+                                        Best Time To Visit:
+                                    </div>
+                                    <div class="value">
+                                        June-Jan
+                                    </div>
+                                </div>
+                                <div class="detailTab">
+                                    <div class="heading">
+                                        Duration:
+                                    </div>
+                                    <div class="value">
+                                        3,5,7Days
+                                    </div>
+                                </div>
+                                <div class="detailTab">
+                                    <div class="heading">
+                                        Local Language:
+                                    </div>
+                                    <div class="value">
+                                        200
+                                    </div>
+                                </div>
+                                <div class="detailTab">
+                                    <div class="heading">
+                                        Nearest City/Town:
+                                    </div>
+                                    <div class="value">
+                                        Mumbai
+                                    </div>
+                                </div>
+                                <div class="detailTab">
+                                    <div class="heading">
+                                        Distance:
+                                    </div>
+                                    <div class="value">
+                                        220km
+                                    </div>
+                                </div>
+                                <div class="detailTab">
+                                    <div class="heading">
+                                        Nearest Hostpital:
+                                    </div>
+                                    <div class="value">
+                                        Nanavati
+                                    </div>
+                                </div>
+                                <div class="detailTab">
+                                    <div class="heading">
+                                        Distance:
+                                    </div>
+                                    <div class="value">
+                                        300km
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location Reviews -->
+                    <div class="item itemHeight">
+                        <div class="locReviews">
+                            <a href="#" data-toggle="modal" data-target="#reviewModal-REMOVE">
+                                <p id="writeAReview" >Write A Review</p>
+                            </a>
+                            <table class="reviewTable">
+                                <tr>
+                                    <td>
+                                        <img class="reviewImg" src="10252105_10153231997807526_5101547361870569217_n.jpg" width="40" height="40">
+                                        <div class="reviewNameData">
+                                            <p class="reviewName">Aakash Thakkar</p>
+                                            <p class="reviewSubText">11 Reviews, Mumbai.</p>
+                                        </div>
+                                        <div class="reviewRating">
+                                            <p>3.5</p>
+                                        </div>
+                                        <div style="clear:both"></div>
+                                        <p>Great trek for starters! Close to mumbai and perfect for a rainy or cool sunday, medium difficulty, and food aroud is good. Great trek for starters! Close to mumbai and perfect for a rainy or cool sunday, medium difficulty, and food aroud is good.</p>
+                                        <ul class="reviewUl">
+                                        	<li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone1.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone2.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone3.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone4.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone5.jpg" width="40" height="40"></li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img class="reviewImg" src="10252105_10153231997807526_5101547361870569217_n.jpg" width="50" height="50">
+                                        <div class="reviewNameData">
+                                            <p class="reviewName">Aakash Thakkar</p>
+                                            <p class="reviewSubText">11 Reviews, Mumbai.</p>
+                                        </div>
+                                        <div class="reviewRating">
+                                            <p>3.5</p>
+                                        </div>
+                                        <div style="clear:both"></div>
+                                        <p>Great trek for starters! Close to mumbai and perfect for a rainy or cool sunday, medium difficulty, and food aroud is good. Great trek for starters! Close to mumbai and perfect for a rainy or cool sunday, medium difficulty, and food aroud is good.</p>
+                                        <ul class="reviewUl">
+                                        	<li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone1.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone2.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone3.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone4.jpg" width="40" height="40"></li>
+                                            <li><img src="http://www.hamptapass.co.in/Hamtapass-Trek-images/DetailsItinerary/day%201/dayone5.jpg" width="40" height="40"></li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Trip Providers -->
+                    <div class="item itemHeight">
+                        <div class="list-group-container list-group-container2">
+                                <a class="list-group-item" onClick="selectTripProvider(this)">
+                                    <img style="border-radius: 8px;" src="images/trek.png" class="imageTwo">
+                                    <div class="list-item-content" style="width: 300px;">
+                                        <h4 class="list-group-item-heading" style="margin-top: -3px; margin-bottom: 0px;">Explorers</h4>
+                                        <p class="list-group-item-text">3+ Years Of Experience<span class="badgeCounter2" style="background-color:red;"><img src="rating3.png" width="20" height="20"> 2.5</span></p>
+                                        <div class="list-item-division" style="margin-top: 0px;">
+                                            <ul>
+                                                <li>11th September</li>
+                                                <li>Rs. 800</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div style="clear:both;"></div>
+                            	</a>
+                                <a class="list-group-item" onClick="selectTripProvider(this)">
+                                    <img style="border-radius: 8px;" src="images/yhai" class="imageTwo">
+                                    <div class="list-item-content" style="width: 300px;">
+                                        <h4 class="list-group-item-heading" style="margin-top: -3px; margin-bottom: 0px;">YHAI</h4>
+                                        <p class="list-group-item-text">7+ Years Of Experience<span class="badgeCounter2"><img src="rating4.png" width="20" height="20"> 4.5</span></p>
+                                        <div class="list-item-division" style="margin-top: 0px;">
+                                            <ul>
+                                                <li>11th September</li>
+                                                <li>Rs. 500</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div style="clear:both;"></div>
+                            	</a>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+
+
+        <div class="listSide">
+
+            <div class="list-group-container" id="list-container">
+                <div class="panel">
+                    <a data-toggle="collapse" name="0" data-parent="#list-container" href="#pune" class="list-group-item" onClick="selectTrip(this)">
+                        <img src="images/Rajmachi_0.jpg" class="image">
+                        <div class="list-item-content">
+                            <h4 class="list-group-item-heading">Pune</h4>
+                            <p class="list-group-item-text">Maharashtra<span class="badgeCounter">7 Activities</span></p>
+                            <div class="list-item-division">
+                                <ul>
+                                    <li>122 km</li>
+                                    <li><img src="sunny.png" width="30" height="30">18-25degree</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div style="clear:both;"></div>
+                    </a>
+                    <ul id="pune" class="collapse subResults">
+                        <div class="panel">
+                            <a data-toggle="collapse" href="#puneTreks" data-parent="#pune">
+                                <li>
+                                    <img src="images/trekking.png" width="50" height="40" style="margin-right: 10px;">Trekking
+                                    <span class="badgeCounterActivity">2 Activities</span>
+                                    <span class="activityIndex">7.5</span>
+                                </li>
+                            </a>
+                            <ul id="puneTreks" class="collapse subResults">
+                                <li value="0" onClick="selectActivity(this)">Hampta Pass Trek<span class="activityIndex">7.5</span></li>
+                                <li value="1" onClick="selectActivity(this)">Valley Of Flower Trek<span class="activityIndex">4.5</span></li>
+                                <li>Roopkund Trek<span class="activityIndex">6</span></li>
+                                <li>Stok Kangri Expedition<span class="activityIndex">2.5</span></li>
+                                <li>Goechala Trek<span class="activityIndex">9.5</span></li>
+                            </ul>
+                        </div>
+                        <div class="panel">
+                            <a data-toggle="collapse" href="#puneRafting" data-parent="#pune">
+                                <li>
+                                    <img src="images/22422-200.png" width="50" height="40" style="margin-right: 10px;">White Water Rafting
+                                </li>
+                            </a>
+                            <ul id="puneRafting" class="collapse subResults">
+                                <li>7.5km Raft<span class="activityIndex">7.5</span></li>
+                                <li>18km Raft<span class="activityIndex">4.5</span></li>
+                            </ul>
+                        </div>
+                        <li value="2" onClick="selectActivity(this)">
+                            <img src="images/Travel-Camping-Tent-icon.png" width="50" height="40" style="margin-right: 10px;">Camping
+                        </li>
+                        <li value="3" onClick="selectActivity(this)">
+                            <img src="images/rock-climbing-icon.png" width="50" height="40" style="margin-right: 10px;">Rock Climbing
+                            <span style="right:20px; top: 5px; position:absolute; line-height: 20px; border-color:#930; border-style:solid; border-width: 2px; padding: 5px 15px;">2.5</span>
+                        </li>
+                        <li value="4" onClick="selectActivity(this)">
+                            <img src="images/free-vector-hotel-icon-near-mountain-biking_100594_Hotel_Icon_Near_Mountain_Biking.png" width="50" height="40" style="margin-right: 10px;">Cycling</li>
+                    </ul>
+                </div>
+
+                <div class="panel">
+                    <a data-toggle="collapse" data-parent="#list-container" href="#kolad" class="list-group-item" onClick="selectTrip(this)">
+                        <img src="images/Rajmachi_0.jpg" class="image">
+                        <div class="list-item-content">
+                            <h4 class="list-group-item-heading">Kolad</h4>
+                            <p class="list-group-item-text">Maharashtra</p>
+                            <div class="list-item-division">
+                                <ul>
+                                    <li>148 km</li>
+                                    <li><img src="sunny.png" width="30" height="30">18-25degree</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div style="clear:both;"></div>
+                    </a>
+                    <ul id="kolad" class="collapse subResults">
+                        <li onClick="">Trekking</li>
+                        <li>White Water Rafting</li>
+                        <li>Camping</li>
+                        <li>Cycling</li>
+                    </ul>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="mapSide">
+            <div id="googleMap" style="height: 100%;"></div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files 
+            as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+		function updateScrollNav()
+		{
+			$(".contentData").scroll(function() {
+                if ($(".contentData").scrollTop() > 350) {
+                    document.getElementsByClassName("contentHeaders").item(0).setAttribute("style", "top: 0px;");
+                }
+                //if($(".contentHeaders").position().top == 0)
+                else {
+                    var temp = 350 - $(".contentData").scrollTop();
+                    document.getElementsByClassName("contentHeaders").item(0).setAttribute("style", "top: " + temp.toString() + "px;");
+                }
+            });
+		}
+    </script>
+    <script>
+			$(document).ready(function(){
+			  $("#buySelect").on("hide.bs.collapse", function(){
+				$("#buySelectA").html('<span class="buyIndicator">+</span>' + "Step 1: Select Date & Time");
+			  });
+			  $("#buySelect").on("show.bs.collapse", function(){
+				$("#buySelectA").html('<span class="buyIndicator">-</span>' + "Step 1: Select Date & Time");
+			  });
+			  $("#buyDetails").on("hide.bs.collapse", function(){
+				$("#buyDetailA").html('<span class="buyIndicator">+</span>' + "Step 2: Your Details");
+			  });
+			  $("#buyDetails").on("show.bs.collapse", function(){
+				$("#buyDetailA").html('<span class="buyIndicator">-</span>' + "Step 2: Your Details");
+			  });
+			  $("#buySummary").on("hide.bs.collapse", function(){
+				$("#buySummaryA").html('<span class="buyIndicator">+</span>' + "Step 3: Order Summary");
+			  });
+			  $("#buySummary").on("show.bs.collapse", function(){
+				$("#buySummaryA").html('<span class="buyIndicator">-</span>' + "Step 3: Order Summary");
+			  });
+			  $("#buyPayment").on("hide.bs.collapse", function(){
+				$("#buyPaymentA").html('<span class="buyIndicator">+</span>' + "Step 4: Payment");
+			  });
+			  $("#buyPayment").on("show.bs.collapse", function(){
+				$("#buyPaymentA").html('<span class="buyIndicator">-</span>' + "Step 4: Payment");
+			  });
+			});
+	</script>
+    <script>
+	$.ajax({
+  		method: "POST",
+  		url: "php/getLocations.php",
+		data: { sortParameter: 0}
+	})
+  .done(function( data ) {
+		document.getElementsByClassName("listSide").item(0).innerHTML = data;
+  });
+  function sortLocation(element, index)
+  {
+	  document.getElementById("sortList").innerHTML = element.innerHTML;
+	  $.ajax({
+  		method: "POST",
+  		url: "php/getLocations.php",
+		data: { sortParameter: index }
+		})
+  		.done(function( data ) {
+			document.getElementsByClassName("listSide").item(0).innerHTML = data;
+  		});
+  }
+  function updateInfo1WithLocation(element)
+  {
+	  var text = element.attributes.href.value.replace('#','');
+	  $.ajax({
+  		method: "POST",
+  		url: "php/getInfo1Location.php",
+		data: { locationName: text }
+		})
+  		.done(function( data ) {
+    		document.getElementById("infoLevel1").innerHTML = data;
+  		});
+  }
+  function clearSelectedActivities()
+  {
+	  var elements = document.getElementsByClassName("subResults");
+		for(var j = 0; j<elements.length; j++)
+		{
+			var elems = elements.item(j).getElementsByTagName("li");
+			for(var i = 0; i<elems.length;i++)
+			{
+				elems.item(i).setAttribute("class", "");
+			}
+		}
+  }
+  function updateInfo1WithActivity(element)
+	{
+		closeInfo2();
+		clearSelectedActivities();
+		element.setAttribute("class", "selectedActivity");
+		var text = element.innerHTML;
+		$.ajax({
+  		method: "POST",
+  		url: "php/getInfo1.php",
+		data: { activityName: text }
+		})
+	  .done(function( data ) {
+			document.getElementById("infoLevel1").innerHTML = data;
+	  });
+	}
+	function updateTripProvider(subl,organizer)
+	{
+		$.ajax({
+  		method: "POST",
+  		url: "php/getInfo2.php",
+		data: { sublocation: subl, organizer: organizer }
+		})
+  		.done(function( data ) {
+    		document.getElementById("info2").innerHTML = data;
+			updateScrollNav();
+  		});
+	}
+	$(window).load(function(){
+  		var x= document.getElementsByName("0").length;
+  		document.getElementById("resultsct").innerHTML=x;
+	});
+	var tripTypeFilter = [["Camping", 0],["Trek", 0],["Rafting", 0]];
+	function checkThis(element,value) 
+	{
+		var checkBox = element.getElementsByClassName("triptype").item(0);
+		if(checkBox.checked)
+		{
+			if(checkBox.value == "camping")
+			{
+				tripTypeFilter[0][1] = 1;
+			}
+			else if(checkBox.value == "trek")
+			{
+				tripTypeFilter[1][1] = 1;
+			}
+			else
+			{
+				tripTypeFilter[2][1] = 1;
+			}
+		}
+		else
+		{
+			if(checkBox.value == "camping")
+			{
+				tripTypeFilter[0][1] = 0;
+			}
+			else if(checkBox.value == "trek")
+			{
+				tripTypeFilter[1][1] = 0;
+			}
+			else
+			{
+				tripTypeFilter[2][1] = 0;
+			}
+		}
+		var str = "";
+		for(var i = 0; i<tripTypeFilter.length; i++)
+		{
+			if(tripTypeFilter[i][1] == 1)
+			{
+				str = str + tripTypeFilter[i][0] + ", ";
+			}
+		}
+		alert(str);
+	}
+	function locationFilter(element)
+	{
+		$.ajax({
+  		method: "POST",
+  		url: "php/locationSearch.php",
+		data: { locationString: element.value }
+		})
+  		.done(function( data ) {
+    		document.getElementsByClassName("listSide").item(0).innerHTML = data;
+  		});
+	}
+	</script>
+    <script type="text/javascript" src="js/buyModal.js"></script>
+    </div>
+</body>
+
+</html>

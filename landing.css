@@ -1,0 +1,946 @@
+@charset "UTF-8";
+/* CSS Document */
+*
+{
+	margin: 0px;
+	padding: 0px;
+}
+a:hover
+{
+	text-decoration:none;
+}
+body
+{
+	background-color: #EDEFED;
+}
+.hero
+{
+	width: 100%;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	background-color: #FFF;
+	background-repeat:no-repeat;
+	background-size: cover;
+	background-image:url(images/Rajmachi_0.png);
+	text-align: center;
+	box-shadow: 1px 1px 5px #888888;
+	z-index:1;
+	position:absolute;
+}
+.hero .mainH1
+{
+	position: relative;
+	font-size: 52px;
+	text-align: center;
+	width: 100%;
+	top: 37%;
+	font-family: Geogrotesque; 
+	color: #FFF;
+}
+.hero h3
+{
+	position: absolute;
+	top: 280px;
+	width: 100%;
+	text-align: center;
+	color: #FFF;
+}
+.blackOpacitySearch
+{
+	top: 500px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	background-color: #000;
+	position: absolute;
+	opacity: 0.6;
+}
+.wrapSearch
+{
+	width: 1020px;
+	margin: 0 auto;
+	text-align: center;
+}
+.searchBarContainer
+{
+	position: absolute;
+	top: 82%;
+	right: 0px;
+	left: 0px;
+}
+.searchBarContainer .textInput
+{
+	opacity:0.6;
+	height: 100%;
+	width:75%;
+	float: left;
+	border-radius: 4px 0px 0px 4px;
+	padding-left: 24px;
+	border: 0px;
+}
+.searchBarContainer .textInput:focus
+{
+	opacity: 1;
+	color: #000;
+}
+.searchBarContainer .textInput:focus ~ .results
+{
+	display: block; 
+}
+.searchBarContainer .textButton
+{
+	float:right;
+	height: 45px;
+	width: 25%;
+	background-color: #FF790C;
+	border: 0px;
+	font-family: proxima-nova;
+	color: #FFF;
+	font-size: 22px;
+	border-radius: 0px 4px 4px 0px;
+}
+.searchBarHolder
+{
+	width:800px;
+	height:45px;
+	margin: 0 auto;
+}
+.searchbar
+{
+	width:100%;
+    position: absolute;
+    text-align: center;
+    top: 10%;
+	padding-top: 10px;
+}
+.searchbar h1
+{
+	color: #FFF;
+	display: inline-block;
+	margin: 0px;
+	font-size:46px;
+}
+.searchBox:focus ~ .searchOptions
+{
+	display: block !important;
+}
+.searchbar .searchBox
+{
+	background-color: transparent;
+	display: inline-block;
+	border: 0px;
+	border-bottom: solid 3px #000;
+	color: #FFF;
+	font-size: 36px;
+	margin-left: 20px;
+	text-align: center;
+	width: 490px;
+}
+.searchbar .searchButton
+{
+	width: 250px;
+	height:40px;
+	background-color: #FFF;
+	border: 0px;
+	border-radius: 8px;
+	margin-left: 40px;
+}
+.searchBarHolder .results 
+{    
+	display: none;
+	width:75%;
+    top: 35px;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 0;
+    margin: 0;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #cbcfe2 #c8cee7 #c4c7d7;
+    border-radius: 0px 0px 3px 3px;
+    background-color: #fdfdfd;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fdfdfd), color-stop(100%, #eceef4));
+    background-image: -webkit-linear-gradient(top, #fdfdfd, #eceef4);
+    background-image: -moz-linear-gradient(top, #fdfdfd, #eceef4);
+    background-image: -ms-linear-gradient(top, #fdfdfd, #eceef4);
+    background-image: -o-linear-gradient(top, #fdfdfd, #eceef4);
+    background-image: linear-gradient(top, #fdfdfd, #eceef4);
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    -ms-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    -o-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.searchBarHolder .results li 
+{ 
+	display: block;
+	border-bottom: solid 1px #CCC; 
+}
+.searchBarHolder .results li:hover
+{
+	text-decoration: none;
+    color: #FFF;
+    border-color: #2380dd #2179d5 #1a60aa;
+    background-color: #338cdf;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #59aaf4), color-stop(100%, #338cdf));
+    background-image: -webkit-linear-gradient(top, #59aaf4, #338cdf);
+    background-image: -moz-linear-gradient(top, #59aaf4, #338cdf);
+    background-image: -ms-linear-gradient(top, #59aaf4, #338cdf);
+    background-image: -o-linear-gradient(top, #59aaf4, #338cdf);
+    background-image: linear-gradient(top, #59aaf4, #338cdf);
+    -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 1px rgba(0, 0, 0, 0.08);
+    -moz-box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 1px rgba(0, 0, 0, 0.08);
+    -ms-box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 1px rgba(0, 0, 0, 0.08);
+    -o-box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 1px rgba(0, 0, 0, 0.08);
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 1px rgba(0, 0, 0, 0.08);
+}
+.searchBarHolder .results li:hover a
+{
+	color: #FFF;	
+}
+.searchBarHolder .results li:first-child { margin-top: -1px }
+
+.searchBarHolder .results a {
+    display: block;
+    position: relative;
+    margin: 0 -1px;
+    padding: 6px 40px 6px 10px;
+    color: #808394;
+    font-weight: 500;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+
+.searchBarHolder .results a span { font-weight: 200 }
+/*
+.searchBarHolder .results a:before {
+    content: '';
+    width: 90px;
+    height: 18px;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    margin-top: -9px;
+	background-color:red;
+}*/
+.searchOptions
+{
+	text-align: center;
+	padding-left: 20px;
+	display: inline-block;
+}
+.searchOption
+{
+	width: 80px;
+	height: 80px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	margin: 0px 20px;
+	cursor: pointer;
+	float: left;
+	position: relative;
+}
+.searchOption p
+{
+	margin: 0px;
+	bottom: 0px;
+	position: absolute;
+	left: 10px;
+	opacity: 0;
+}
+.searchOptionCenter
+{
+	background-size: contain;
+	background-repeat: no-repeat;
+	margin: 0px 20px;
+	cursor: pointer;
+	float: left;
+	position: relative;
+	width: 220px; 
+	margin-top:-20px; 
+	margin-bottom: -10px; 
+	height: 100px;
+}
+.searchOptionCenter p
+{
+	margin: 0px;
+	position: absolute;
+	opacity: 0;
+	left:80px; 
+	bottom:-20px; 
+	opacity:1
+}
+.searchOption:hover
+{
+	height:100px;
+}
+/*.searchOption:hover p
+{
+	color: #000 !important;
+}*/
+.header
+{
+	position: absolute;
+	width: 100%;
+	font-size: 16px;
+	z-index: 2;
+}
+#logo
+{
+	position: absolute;
+	color: #FFF;
+	width: 100%;
+	left: 0px;
+	font-size: 100px;
+	top: 24%;
+	font-family: Bank Gothic;
+	text-shadow: 0px 2px 4px #555;
+}
+#listWithUs
+{
+	float: right;
+	margin-top: 8px;
+	margin-right: 10px;
+	background-color:#33C;
+	padding: 4px 6px;
+	color: #FFF;
+	border-radius: 7px;
+}
+#listWithUs:hover
+{
+	background-color: #2929A3;
+}
+#listWithUs:active, #listWithUs:focus {
+    background-color: #252593;
+}
+#blogUs
+{
+	float: right;
+	margin-top: 8px;
+	margin-right: 10px;
+	border-color: #33C;
+	border-style: solid;
+	border-width: 2px;
+	padding: 3px 14px;
+	color: #000;
+	border-radius: 7px;
+}
+#blogUs:hover
+{
+	border-width: 4px;
+	padding: 1px 12px;
+}
+select::-ms-expand { /* for IE 11 */
+    display: none;
+}
+.selectActivity
+{
+	height: 100%;
+	width: 75%;
+	margin: 0px;
+	padding: 0px;
+	border: 0px none;
+	border-radius: 0px;
+	overflow: hidden;
+	-webkit-appearance: none;
+   -moz-appearance: none;
+   appearance: none;
+   padding-left: 15px;
+   background: url(arrow_select.png) no-repeat right #FFF;
+}
+.selectSort
+{
+	width: 24.5%;
+	height: 100%;
+	background: url(arrow_select.png) no-repeat right #FFF;
+	border: 0px none;
+	-webkit-appearance: none;
+   -moz-appearance: none;
+   appearance: none;
+   border-radius: 0px;
+   padding-left:15px;
+}
+
+.belowHero
+{
+	top: 100%;
+	left: 0px;
+	right: 0px;
+	position: absolute;
+	background-color: #FFF;
+}
+.weekend
+{
+	width: 100%;
+	padding-top:25px;
+}
+.explore
+{
+	width: 100%;
+	margin-top: 20px;
+}
+.wrap
+{
+	width: 90%;
+	margin: 0px auto;
+	text-align: center;
+	padding: 10px 0px 0px 10px;
+}
+.wrap h1
+{
+	margin: 0px;
+	font-size: 28px;
+}
+.wrap h3
+{
+	margin: 0px;
+	font-size: 18px;
+	color: rgb(204, 204, 204);
+	font-weight: 400;
+}
+.imageCard
+{
+	background-size: cover;
+	background-position: center center;
+	width: 100%;
+	height:100%;
+}
+.innerBoxContainer
+{
+}
+.innerBox
+{
+	width: 24%;
+	height: 370px;
+	margin-top: 20px;
+	float: left;
+	position: relative;
+	margin-right: 5px;
+	font-family: "Avenir Next" !important;
+}
+.innerBox:hover .blackOpacity
+{
+	height: auto !important;
+}
+.innerBox a
+{
+	cursor: pointer;
+}
+.firstInner
+{
+	margin-left:0px;
+}
+.lastInner
+{
+	margin-right:0px;
+}
+.moreButton button
+{
+	width: 300px;
+	margin: 10px auto 0px;
+	background-color: #D9D9D9;
+	padding: 10px 0px;
+	border-radius: 8px;
+	border: 1px solid #D0CECE;
+	cursor: pointer;
+	font-size: 16px;
+	color: #3D3D3D;
+	font-family: proxima-nova;
+}
+.moreButton button:hover
+{
+	background-color: #ABABAB;
+}
+.moreButton button:focus, .moreButton button:active
+{
+	background-color: #808080;
+}
+.blackOpacity
+{
+	background-color: #000;
+	height: 40px;
+	opacity: 00.4;
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	width: 100%;
+}
+.cardDate
+{
+	margin: 0px;
+	position: absolute;
+	left: 5px;
+	top: 8px;
+	color: #FFF;
+	font-size: 16px;
+}
+.cardPrice
+{
+	margin: 0px;
+	position: absolute;
+	right: 5px;
+	top: 3px;
+	color: #FFF;
+	font-size: 16px;
+	border-radius: 8px;
+	padding: 0px 8px;
+	border: 3px solid #FFF;
+}
+.imageCard h1
+{
+	position: relative;
+	top: 125px;
+	color: #FFF;
+	font-size: 44px;
+	text-shadow: 0px 2px 4px #000;
+}
+.imageCard h2
+{
+	position: relative;
+	top: 110px;
+	color: #FFF;
+	text-shadow: 0px 2px 4px #000;
+	font-size: 18px;
+}
+.imageCard h3
+{
+	position: absolute;
+	bottom: 25px;
+	color: #FFF;
+	width: 100%;
+	font-size: 24px;
+	text-align: center;
+	text-shadow: 0px 2px 4px #000;
+}
+.footer
+{
+	height: 100px;
+	width:100%;
+	z-index:3;
+	padding-top: 20px;
+}
+.partnerOrganizer
+{
+	width:100%;
+	padding: 25px 0px;
+	background-color: #FC664B;
+	box-shadow: 1px 1px 5px #888888;
+	text-align: center;
+}
+.partnerOrganizer p
+{
+	font-family: "Avenir Next" !important;
+	font-size: 28px;
+	color: #FFF;
+}
+.wrap2
+{
+	width: 70%;
+	margin: 0px auto;
+	text-align: center;
+}
+.partnerStats
+{
+	float: left;
+	height: 160px;
+	width: 40%;
+}
+.partnerStat
+{
+	float: right;
+	height: 100%;
+	width: 40%;
+}
+.partnerStat h1
+{
+	font-size:36px;
+	font-family:"Open Sans" !important;
+	color: #FFF;
+}
+.partnerStat h2
+{
+	font-family:"Open Sans" !important;
+	color: #FFF;
+}
+.partnerLogos
+{
+	float: left;
+	width: 60%;
+	height: 160px;
+	border-left: solid 1px #A0AABF;
+	position: relative;
+}
+.partnerLogo
+{
+	width: 32.5%;
+	height: 100%;
+	display: inline-block;
+	vertical-align: middle;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.partnerLogo img
+{
+	width: 160px;
+	height:auto;
+	margin-top: 30px;
+}
+.partnerLogoContainer
+{
+	height: 120px;
+	width: 98%;
+	overflow-x: scroll;
+	overflow-y: hidden;
+	white-space: nowrap;
+	margin: 0 auto;
+}
+
+.footer
+{
+	background-color: #141B23;
+	height:100%;
+}
+.footer p
+{
+	margin: 0px;
+}
+.upIcon
+{
+	background-image:url(images/upIcon.png);
+	height:50px;
+	width:120px;
+	margin: 0 auto;
+	background-size:contain;
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+.wildrSubText
+{
+	color: #FFF;
+	font-size: 54px;
+	font-family: Geogrotesque;
+}
+.footerCopyright
+{
+	color: #FFF;
+	font-size: 20px;
+	color: #949AAB;
+	font-family: Geogrotesque;
+}
+.footer ul
+{
+	list-style: none;
+	padding:0px;
+	margin: 15px 0px 0px -5px;
+}
+.footer li
+{
+	display: inline-block;
+	width: 70px;
+	height: 70px;
+	cursor: pointer;
+	padding-top: 2px;
+	margin-right: 15px;
+	border-radius: 80px;
+	font-size:46px;
+	color: #FFF;
+}
+#blogLogo
+{
+	border: solid 1px #CCC;
+	height:auto;
+}
+#blogLogo span
+{
+	font-size: 24px;
+}
+#facebookLogo
+{
+	background-color: #2D4487;
+	border: solid 1px #2D4487;
+}
+#twitterLogo
+{
+	background-color: #139AE9;
+	border: solid 1px #139AE9;
+}
+#instagramLogo
+{
+	background-color: #139AE9;
+	border: solid 1px #139AE9;
+}
+#listWithUsLogo
+{
+	width:auto;
+}
+#listWithUsLogo span
+{
+	font-size:24px;
+}
+.textBox
+{
+	min-width: 100%;
+	height: 30px;
+	margin: 10px;
+}
+.formButtons
+{
+	width: 100%;
+	text-align: right;
+}
+.formLeft
+{
+	float: left; 
+	width:30%;
+}
+.formLeft label
+{
+	width: 100%;
+	height: 30px;
+	margin: 10px;
+}
+.formRight
+{
+	float: left; 
+	width: 65%;
+}
+.cancelButton
+{
+	margin-top: 10px;
+	width: 100px;
+	height:30px;
+	background-color: blue;
+	border-radius: 6px;
+	border: 0px;
+	color: #FFF;
+}
+.submitButton
+{
+	margin-left: 5px;
+	margin-top: 10px;
+	width: 100px;
+	height:30px;
+	background-color: red;
+	border-radius: 6px;
+	border: 0px;
+	color: #FFF;
+}
+
+@media only screen and (max-width: 1800px){
+.partnerStat
+	{
+		width: 50% !important;
+	}
+	.wrap2
+	{
+		width:85%;
+	}
+}
+@media only screen and (max-width: 1200px){
+	.wrap
+	{
+		width:100% !important;
+		padding:0px 10px;
+	}
+}
+
+@media only screen and (max-width: 1050px){
+	.searchOptions
+	{
+		padding-left: 0px !important;
+	}
+}
+@media only screen and (max-width: 980px){
+	.searchOption
+	{
+		margin:10px;
+	}
+	.innerBox
+	{
+		width: 49%
+	}
+	.partnerStats
+	{
+		width: 100%;
+	}
+	.partnerLogos
+	{
+		width: 100%;
+		border-left: 0px;
+	}
+	.partnerLogos:before
+	{
+		border: 0px none;
+		content:'';
+		position: absolute;
+		width:100%;
+		height: 2px;
+		top: 0px;
+		left:0px;
+		background-image: -moz-linear-gradient(left center , transparent, #A0AABF, transparent);
+	}
+}
+@media only screen and (max-width: 880px){
+	.searchOption
+	{
+		margin:5px;
+	}
+	.wrap
+	{
+		padding: 0px 3px 0px 9px!important;
+	}
+	.innerBox
+	{
+		margin-right: 5px;
+	}
+	.lastInner
+	{
+		margin-right: 0px !important;
+	}
+}
+@media only screen and (max-width: 800px){
+	.searchOption
+	{
+		width: 60px !important;
+		height: 60px !important;
+	}
+	.searchOption
+	{
+		margin-right:3px;
+	}
+	.selectActivity
+	{
+		background: #FFF;
+		width: 65%;
+		padding: 0px 0px 0px 8px;
+		border-radius: 8px 0px 0px 8px;
+	}
+	.selectSort
+	{
+		margin-left: -3px;
+		background: #FFF;
+		width:34%;
+		padding: 0px 0px 0px 8px;
+		border-radius: 0px 8px 8px 0px;
+	}
+}
+@media only screen and (max-width: 680px){
+	.searchOption
+	{
+		display:none;
+	}
+	.searchOptionCenter
+	{
+		display: none;
+	}
+	.searchBarContainer
+	{
+		top: 75% !important;
+	}
+	.searchBarHolder
+	{
+		width:90%;
+	}
+	.searchBarHolder .textInput
+	{
+		padding-left: 10px !important;
+	}
+	.wrap2
+	{
+		width: 100%;
+	}
+}
+@media only screen and (max-width : 520px)
+{
+	.mainH1
+	{
+		top: 18% !important;
+		font-size: 44px !important;
+	}
+	.hero h1 {
+		font-size:42px;
+		top: 24vh;
+	}
+	.hero h3 {
+		top: 35vh;
+	}
+	.footer
+	{
+		top: 73vh;
+	}
+	.footerContent
+	{
+		top: 73vh;
+	}
+	.searchbar
+	{
+		top: 55vh;
+		text-align:left;
+	}
+	.partnerStats
+	{
+		width: 100%;
+	}
+	.partnerLogos
+	{
+		width: 100%;
+	}
+	.partnerLogo img
+	{
+		width: 120px;
+		margin-top: 45px;
+	}
+	.footer ul
+	{
+		margin-top: 5px;
+	}
+	.hideThisMobile
+	{
+		display: none;
+	}
+	.formLeft
+	{
+		width: 100%;
+	}
+	.formRight
+	{
+		width: 100%;
+	}
+	.showThisMobile
+	{
+		display: block !important;
+	}
+	.innerBox
+	{
+		width:100% !important;
+		height: 200px;
+		margin-top: 5px;
+	}
+	.innerBoxContainer
+	{
+		margin:0px !important;
+	}
+	.imageCard h1
+	{
+		top: 15%;
+	}
+	.imageCard h2
+	{
+		top:20%;
+		font-size: 24px;
+	}
+	.imageCard h3
+	{
+		display: none;
+	}
+	.wrap
+	{
+		padding:0px !important;
+	}
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+}
